@@ -122,3 +122,31 @@ function postfx.swap()
   postfx.canvas, postfx.alternate = postfx.alternate, postfx.canvas
   postfx.alternate:clear()
 end
+
+if ammo then
+  function love.graphics.setMode(width, height, fullscreen, vsync, fsaa)
+    width = width * postfx._scale
+    height = height * postfx._scale
+    
+    local success, result = pcall(
+      love.graphics.oldSetMode,
+      width,
+      height,
+      fullscreen,
+      vsync,
+      fsaa
+    )
+    
+    if success then
+      if result then
+        love.graphics.width = width
+        love.graphics.height = height
+      end
+      
+      postfx.reset()
+      return result
+    else
+      error(result, 2)
+    end
+  end
+end

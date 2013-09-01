@@ -1,3 +1,5 @@
 local path = ({...})[1]:gsub("%.init", "") 
 require(path .. ".postfx")
-if ammo then require(path .. ".ammo") end
+require(path .. ".Spritemap")
+require(path .. ".Tilemap")
+require(path .. ".Text")
