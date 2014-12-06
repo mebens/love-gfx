@@ -52,7 +52,7 @@ function Tilemap:set(x, y, index)
   love.graphics.setScissor()
   
   if index > 0 then
-    love.graphics.drawq(self._image, self._quads[index], x * tw, y * th)
+    love.graphics.draw(self._image, self._quads[index], x * tw, y * th)
   end
   
   love.graphics.setCanvas()
@@ -79,7 +79,7 @@ function Tilemap:setRect(x, y, width, height, index)
     
     for i = x, x + width - 1 do
       for j = y, y + height - 1 do
-        if index > 0 then love.graphics.drawq(self._image, quad, i * tw, j * th) end
+        if index > 0 then love.graphics.draw(self._image, quad, i * tw, j * th) end
       end
     end
   end

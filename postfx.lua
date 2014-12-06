@@ -23,20 +23,20 @@ setmetatable(postfx, {
   end
 })
 
--- PixelEffect class
+-- Shader class
 
-local PixelEffect = class("PixelEffect")
+local Shader = class("Shader")
 
-function PixelEffect:initialize(effect)
+function Shader:initialize(effect)
   self.effect = effect
   self.active = true
 end
 
-function PixelEffect:draw(canvas, alternate)
-  love.graphics.setPixelEffect(self.effect)
+function Shader:draw(canvas, alternate)
+  love.graphics.setShader(self.effect)
   love.graphics.setCanvas(alternate)
   love.graphics.draw(canvas, 0, 0)
-  love.graphics.setPixelEffect()
+  love.graphics.setShader()
   postfx.swap()
 end
 
@@ -44,7 +44,7 @@ end
 
 function postfx.init()
   postfx.supported = love.graphics.isSupported("canvas")
-  postfx.fxSupported = postfx.supported and love.graphics.isSupported("pixeleffect")
+  postfx.fxSupported = postfx.supported and love.graphics.isSupported("shader")
   postfx.active = postfx.supported
   if postfx.supported then postfx.reset() end
 end
@@ -63,12 +63,12 @@ function postfx.reset()
 end
 
 function postfx.add(effect)
-  if tostring(effect) == "PixelEffect" then
-    effect = PixelEffect:new(effect)
+  if tostring(effect) == "Shader" then
+    effect = Shader:new(effect)
   end
   
   postfx.all[#postfx.all + 1] = effect
-  if not effect.draw then effect.draw = PixelEffect.draw end
+  if not effect.draw then effect.draw = Shader.draw end
   if effect.init then effect:init() end
   return effect
 end
@@ -121,32 +121,4 @@ end
 function postfx.swap()
   postfx.canvas, postfx.alternate = postfx.alternate, postfx.canvas
   postfx.alternate:clear()
-end
-
-if ammo then
-  function love.graphics.setMode(width, height, fullscreen, vsync, fsaa)
-    width = width * postfx._scale
-    height = height * postfx._scale
-    
-    local success, result = pcall(
-      love.graphics.oldSetMode,
-      width,
-      height,
-      fullscreen,
-      vsync,
-      fsaa
-    )
-    
-    if success then
-      if result then
-        love.graphics.width = width
-        love.graphics.height = height
-      end
-      
-      postfx.reset()
-      return result
-    else
-      error(result, 2)
-    end
-  end
 end

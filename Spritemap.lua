@@ -66,7 +66,7 @@ end
 
 function Spritemap:draw(x, y, r, sx, sy, ox, oy, kx, ky)
   if not self.visible then return end
-  love.graphics.drawq(self._image, self._quads[self._frame], x, y, r, sx, sy, ox, oy, kx, ky)
+  love.graphics.draw(self._image, self._quads[self._frame], x, y, r, sx, sy, ox, oy, kx, ky)
 end
 
 function Spritemap:add(name, frames, rate, loop)
