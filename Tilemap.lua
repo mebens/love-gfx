@@ -43,7 +43,7 @@ function Tilemap:set(x, y, index)
   
   love.graphics.setCanvas(self._canvas)
   love.graphics.setScissor(x * tw, y * th, tw, th)
-  self._canvas:clear()
+  love.graphics.clear()
   love.graphics.setScissor()
   
   if index > 0 then
@@ -66,7 +66,7 @@ function Tilemap:setRect(x, y, width, height, index)
   
   love.graphics.setCanvas(self._canvas)
   love.graphics.setScissor(x * tw, y * th, width * tw, height * th)
-  self._canvas:clear()
+  love.graphics.clear()
   love.graphics.setScissor()
   
   if index > 0 then

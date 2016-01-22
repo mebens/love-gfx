@@ -42,16 +42,7 @@ end
 
 -- functions
 
-function postfx.init()
-  postfx.supported = love.graphics.isSupported("canvas")
-  postfx.fxSupported = postfx.supported and love.graphics.isSupported("shader")
-  postfx.active = postfx.supported
-  if postfx.supported then postfx.reset() end
-end
-
 function postfx.reset()
-  if not postfx.supported then return end
-    
   for _, v in pairs{"canvas", "alternate", "exclusion"} do
     postfx[v] = love.graphics.newCanvas(love.graphics.width, love.graphics.height)
     postfx[v]:setFilter("nearest", "nearest")
@@ -61,6 +52,8 @@ function postfx.reset()
     if v.reset then v:reset() end
   end
 end
+
+postfx.init = postfx.reset
 
 function postfx.add(effect)
   if tostring(effect) == "Shader" then
@@ -79,10 +72,10 @@ end
 
 function postfx.start()
   if not postfx.active then return end
-  postfx.canvas:clear()
-  postfx.alternate:clear()
-  postfx.exclusion:clear()
+  postfx.alternate:renderTo(love.graphics.clear)
+  postfx.exclusion:renderTo(love.graphics.clear)
   love.graphics.setCanvas(postfx.canvas)
+  love.graphics.clear()
 end
 
 function postfx.stop()
