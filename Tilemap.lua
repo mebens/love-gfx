@@ -1,11 +1,8 @@
 Tilemap = class("Tilemap")
-Tilemap._mt = {}
 
-function Tilemap._mt:__index(key)
+function Tilemap:__index(key)
   return rawget(self, "_" .. key) or self.class.__instanceDict[key]
 end
-
-Tilemap:enableAccessors()
 
 function Tilemap:initialize(img, tw, th, width, height)
   self.visible = true
@@ -28,8 +25,6 @@ function Tilemap:initialize(img, tw, th, width, height)
       self._quads[#self._quads + 1] = love.graphics.newQuad(x * tw, y * th, tw, th, imgWidth, imgHeight)
     end
   end
-  
-  self:applyAccessors()
 end
 
 function Tilemap:draw(x, y, r, sx, sy, ox, oy, kx, ky)

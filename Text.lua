@@ -1,11 +1,10 @@
 Text = class("Text")
-Text._mt = {}
 
-function Text._mt:__index(key)
+function Text:__index(key)
   return rawget(self, "_" .. key) or self.class.__instanceDict[key]
 end
 
-function Text._mt:__newindex(key, value)
+function Text:__newindex(key, value)
   if key == "text" then
     self._text = tostring(value)
     if self._font then self._fontWidth = self._font:getWidth(value) end
@@ -33,8 +32,6 @@ function Text:initialize(t)
     self._font = t.font
     self:_setFontValues()
   end
-  
-  self:applyAccessors()
 end
 
 function Text:draw(x, y)

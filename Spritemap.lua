@@ -1,11 +1,10 @@
 Spritemap = class("Spritemap")
-Spritemap._mt = {}
 
-function Spritemap._mt:__index(key)
+function Spritemap:__index(key)
   return rawget(self, "_" .. key) or self.class.__instanceDict[key]
 end
 
-function Spritemap._mt:__newindex(key, value)
+function Spritemap:__newindex(key, value)
   if key == "frame" then
     if rawget(self, "_current") then self:stop() end
     self._frame = value
@@ -13,8 +12,6 @@ function Spritemap._mt:__newindex(key, value)
     rawset(self, key, value)
   end
 end
-
-Spritemap:enableAccessors()
 
 function Spritemap:initialize(img, fw, fh, callback, ...)
   self.active = true
@@ -39,7 +36,6 @@ function Spritemap:initialize(img, fw, fh, callback, ...)
   
   if callback then self:setCallback(callback, ...) end
   self:stop()
-  self:applyAccessors()
 end
 
 function Spritemap:update(dt)
