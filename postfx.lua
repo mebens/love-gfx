@@ -113,5 +113,5 @@ end
 
 function postfx.swap()
   postfx.canvas, postfx.alternate = postfx.alternate, postfx.canvas
-  postfx.alternate:clear()
+  postfx.alternate:renderTo(love.graphics.clear)
 end

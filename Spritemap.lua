@@ -48,8 +48,8 @@ function Spritemap:update(dt)
       self._timer = self._timer + anim.time
       
       if self._animIndex == #anim.frames and not anim.loop then
-        if self.callback then self.callback(unpack(self.callbackArgs)) end
         self:stop()
+        if self.callback then self.callback(unpack(self.callbackArgs)) end
       else
         self._animIndex = self._animIndex % #anim.frames + 1
         self._frame = anim.frames[self._animIndex]
